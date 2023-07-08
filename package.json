@@ -19,6 +19,7 @@
     "axios": "^1.4.0",
     "react": "latest",
     "react-dom": "latest",
+    "react-intersection-observer": "^9.5.2",
     "react-router-dom": "^6.14.1"
   },
   "devDependencies": {
