@@ -1,23 +1,19 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useUser } from '../store/authStore';
-import { useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 type Props = {
   children: React.ReactNode;
 };
 
 const ProtectedRoutes = ({ children }: Props) => {
-  const navigate = useNavigate();
-
   const user = useUser();
 
-  useEffect(() => {
-    if (!user) {
-      navigate('/login');
-    }
-  }, [user, navigate]);
+  if (!user) {
+    return <Navigate to="/login" replace />;
+  }
 
-  return <div>{children}</div>;
+  return children;
 };
 
 export default ProtectedRoutes;

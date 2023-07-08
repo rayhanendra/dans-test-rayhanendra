@@ -15,11 +15,11 @@ type AuthActions = {
 export const useAuthStore = create<AuthState & AuthActions>()(
   persist(
     (set) => ({
-      user: '',
+      user: null,
 
       actions: {
         login: (user) => set({ user }),
-        logout: () => set({ user: '' }),
+        logout: () => set({ user: null }),
       },
     }),
     {
