@@ -1,8 +1,27 @@
 import api from './api';
 
 class JobServices {
-  getJobs(page: number) {
-    return api.get('/recruitment/positions.json?page=' + page);
+  getJobs({
+    page,
+    description = '',
+    location = '',
+    full_time = false,
+  }: {
+    page: number;
+    description?: string;
+    location?: string;
+    full_time?: boolean;
+  }) {
+    return api.get(
+      '/recruitment/positions.json?page=' +
+        page +
+        '&description=' +
+        description +
+        '&location=' +
+        location +
+        '&full_time=' +
+        full_time,
+    );
   }
 
   getJobDetail(id: string) {

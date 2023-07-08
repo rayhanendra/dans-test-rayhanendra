@@ -6,9 +6,17 @@ import { useInView } from 'react-intersection-observer';
 import BaseLoader from '../atoms/BaseLoader';
 import { useNavigate } from 'react-router-dom';
 
-const JobList = () => {
+type Props = {
+  filter: {
+    job: string;
+    location: string;
+    full_time: boolean;
+  };
+};
+
+const JobList = ({ filter }: Props) => {
   const navigate = useNavigate();
-  const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useJobsQuery();
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useJobsQuery(filter);
   const { ref, inView } = useInView();
 
   React.useEffect(() => {
@@ -80,7 +88,7 @@ const JobList = () => {
           </Fragment>
         ))}
       </List>
-      {(isFetching || isFetchingNextPage) && <BaseLoader />}
+      {isFetchingNextPage && <BaseLoader />}
       {!hasNextPage ?? (
         <Typography variant="body2" fontWeight={400} color={'GrayText'}>
           Nothing more to load
@@ -104,10 +112,13 @@ const JobList = () => {
   );
 };
 
-const useJobsQuery = () =>
+const useJobsQuery = (filter: { job: string; location: string; full_time: boolean }) =>
   useInfiniteQuery({
-    queryKey: ['jobs'],
-    queryFn: async ({ pageParam = 1 }) => await jobServices.getJobs(pageParam).then((res) => res.data),
+    queryKey: ['jobs', filter],
+    queryFn: async ({ pageParam = 1 }) =>
+      await jobServices
+        .getJobs({ page: pageParam, description: filter.job, location: filter.location, full_time: filter.full_time })
+        .then((res) => res.data),
     getNextPageParam: (lastPage, pages) => {
       if (lastPage.data?.length === 0) return undefined;
       return pages.length + 1;
