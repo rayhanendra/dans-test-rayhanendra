@@ -4,7 +4,7 @@ import React from 'react';
 const TheAppbar = () => {
   return (
     <AppBar position="static">
-      <Container maxWidth="md">
+      <Container maxWidth="lg">
         <Toolbar disableGutters>
           <Box
             sx={{
@@ -20,7 +20,9 @@ const TheAppbar = () => {
               }}
             />
           </Box>
-          <Typography variant="h5">Jobs</Typography>
+          <Typography variant="h5" color={'white'}>
+            Jobs
+          </Typography>
         </Toolbar>
       </Container>
     </AppBar>

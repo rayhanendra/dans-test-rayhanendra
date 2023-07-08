@@ -16,6 +16,7 @@ const BasePaper = ({ children }: Props) => {
           border: 5,
           borderImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0)) 1',
           zIndex: -1,
+          background: 'linear-gradient(180deg, #FFFFFF 0%, #F9F9F9 100%)',
         }}
       ></Box>
       <Box
