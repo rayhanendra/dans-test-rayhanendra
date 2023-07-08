@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "tsc & vite build",
     "preview": "vite preview",
     "prepare": "husky install"
   },
@@ -45,7 +45,7 @@
     "husky": "^8.0.3",
     "lint-staged": "^13.2.2",
     "prettier": "^2.8.8",
-    "typescript": "latest",
+    "typescript": "^5.1.6",
     "vite": "latest"
   },
   "lint-staged": {
