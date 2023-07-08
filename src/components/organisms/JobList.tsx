@@ -4,17 +4,22 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import jobServices from '../../services/job.services';
 import { useInView } from 'react-intersection-observer';
 import BaseLoader from '../atoms/BaseLoader';
+import { useNavigate } from 'react-router-dom';
 
 const JobList = () => {
-  const { ref, inView } = useInView();
-
+  const navigate = useNavigate();
   const { data, fetchNextPage, hasNextPage, isFetching, isFetchingNextPage, status } = useJobsQuery();
+  const { ref, inView } = useInView();
 
   React.useEffect(() => {
     if (inView) {
       fetchNextPage();
     }
   }, [inView]);
+
+  const handleNavigate = (id: string) => {
+    navigate(`/detail/${id}`);
+  };
 
   if (status === 'loading') return <BaseLoader />;
 
@@ -27,10 +32,11 @@ const JobList = () => {
               <Fragment key={index}>
                 <ListItem disableGutters disablePadding>
                   <ListItemButton
-                    sx={{ display: 'flex', justifyContent: 'space-between', py: 1.5 }}
                     disableGutters
                     disableRipple
                     disableTouchRipple
+                    sx={{ display: 'flex', justifyContent: 'space-between', py: 1.5 }}
+                    onClick={handleNavigate.bind(null, item.id)}
                   >
                     <Box>
                       <Typography variant="body1" fontWeight={600} color={'primary'}>
