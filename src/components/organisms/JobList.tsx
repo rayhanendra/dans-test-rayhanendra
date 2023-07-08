@@ -5,6 +5,7 @@ import jobServices from '../../services/job.services';
 import { useInView } from 'react-intersection-observer';
 import BaseLoader from '../atoms/BaseLoader';
 import { useNavigate } from 'react-router-dom';
+import { formatDistance } from 'date-fns';
 
 type Props = {
   filter: {
@@ -77,7 +78,7 @@ const JobList = ({ filter }: Props) => {
                         {item.location}
                       </Typography>
                       <Typography variant="body2" fontWeight={400} color={'GrayText'}>
-                        {item.created_at}
+                        {formatDistance(new Date(item.created_at), new Date(), { addSuffix: true })}
                       </Typography>
                     </Box>
                   </ListItemButton>
