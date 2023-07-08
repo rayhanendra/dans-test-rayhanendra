@@ -17,6 +17,23 @@ const theme = createTheme({
       default: '#F9F9F9',
     },
   },
+  components: {
+    MuiButton: {
+      defaultProps: {
+        disableElevation: true,
+      },
+      variants: [
+        {
+          props: { variant: 'contained', color: 'primary' },
+          style: {
+            color: '#fff',
+            background: 'linear-gradient(to bottom, #73B2E0 0%, #5CA1D3 50%, #4283BD 100%)',
+            textTransform: 'none',
+          },
+        },
+      ],
+    },
+  },
 });
 
 export default theme;
