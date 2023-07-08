@@ -1,8 +1,8 @@
 import api from './api';
 
 class JobServices {
-  getJobs() {
-    return api.get('/recruitment/positions.json?page=1');
+  getJobs(page: number) {
+    return api.get('/recruitment/positions.json?page=' + page);
   }
 }
 

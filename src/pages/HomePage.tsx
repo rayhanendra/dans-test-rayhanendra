@@ -1,5 +1,5 @@
 import React from 'react';
-import { Divider, Typography } from '@mui/material';
+import { Box, Divider, Typography } from '@mui/material';
 import BasePaper from '../components/atoms/BasePaper';
 import JobList from '../components/organisms/JobList';
 
