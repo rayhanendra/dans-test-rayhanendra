@@ -4,30 +4,9 @@ import { useAuthStore, useUser } from '../../store/authStore';
 import jwtDecode from 'jwt-decode';
 
 const TheAppbar = () => {
-  const user = useUser();
-  const logout = useAuthStore((state) => state.logout);
-
-  const [profile, setProfile] = React.useState({
-    picture: '',
-    name: '',
-  });
-
-  useEffect(() => {
-    const userData: {
-      picture: string;
-      name: string;
-    } = jwtDecode(user?.credential || '');
-    console.log(userData);
-
-    setProfile(userData);
-  }, [user]);
-
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-  const open = Boolean(anchorEl);
-
-  const handleLogout = () => {
-    logout();
-  };
+  const profile = useProfile();
+  const handleLogout = useLogout();
+  const { anchorEl, open, setAnchorEl } = useMenu();
 
   return (
     <>
@@ -61,7 +40,7 @@ const TheAppbar = () => {
                   setAnchorEl(e.currentTarget);
                 }}
               >
-                <Avatar src={profile.picture} alt={profile.name} sx={{ width: 32, height: 32 }} />
+                <Avatar src={profile.picture} alt={profile.name} />
               </Button>
               <Menu
                 anchorEl={anchorEl}
@@ -82,6 +61,46 @@ const TheAppbar = () => {
       </AppBar>
     </>
   );
+};
+
+const useMenu = () => {
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+
+  return {
+    anchorEl,
+    open,
+    setAnchorEl,
+  };
+};
+
+const useProfile = () => {
+  const user = useUser();
+  const [profile, setProfile] = React.useState({
+    picture: '',
+    name: '',
+  });
+
+  useEffect(() => {
+    const userData: {
+      picture: string;
+      name: string;
+    } = jwtDecode(user?.credential || '');
+
+    setProfile(userData);
+  }, [user]);
+
+  return profile;
+};
+
+const useLogout = () => {
+  const logout = useAuthStore((state) => state.logout);
+
+  const handleLogout = () => {
+    logout();
+  };
+
+  return handleLogout;
 };
 
 export default TheAppbar;

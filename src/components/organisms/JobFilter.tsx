@@ -9,17 +9,7 @@ type Props = {
 };
 
 const JobFilter = ({ setFilter }: Props) => {
-  const { control, handleSubmit } = useForm({
-    defaultValues: {
-      job: '',
-      location: '',
-      full_time: false,
-    },
-  });
-
-  const onSubmit = (data: FieldValues) => {
-    setFilter(data);
-  };
+  const { control, handleSubmit, onSubmit } = useFormFilter(setFilter);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -74,6 +64,26 @@ const JobFilter = ({ setFilter }: Props) => {
       </Box>
     </form>
   );
+};
+
+const useFormFilter = (setFilter: (filter: any) => void) => {
+  const { control, handleSubmit } = useForm({
+    defaultValues: {
+      job: '',
+      location: '',
+      full_time: false,
+    },
+  });
+
+  const onSubmit = (data: FieldValues) => {
+    setFilter(data);
+  };
+
+  return {
+    control,
+    handleSubmit,
+    onSubmit,
+  };
 };
 
 export default JobFilter;

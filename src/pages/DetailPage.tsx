@@ -10,9 +10,8 @@ import BaseLoader from '../components/atoms/BaseLoader';
 
 function DetailPage() {
   const { id } = useParams();
-  const navigate = useNavigate();
-
   const { data, isLoading } = useJobDetailQuery(id as string);
+  const { handleBack } = useNavigateHandler();
 
   if (isLoading) return <BaseLoader />;
 
@@ -20,17 +19,12 @@ function DetailPage() {
 
   return (
     <>
-      <Button
-        sx={{ textTransform: 'none' }}
-        onClick={() => {
-          navigate('/');
-        }}
-      >
+      <Button sx={{ textTransform: 'none' }} onClick={handleBack}>
         <ChevronLeft />
         <Typography fontWeight={600}>Back</Typography>
       </Button>
       <BasePaper>
-        <Typography variant="body2" fontWeight={500} color={'GrayText'}>
+        <Typography variant="body2" fontWeight={500} color={'GrayText'} gutterBottom>
           {data.type} / {data.location}
         </Typography>
         <Typography variant="h5" fontWeight={600} color={''} gutterBottom>
@@ -115,6 +109,16 @@ function DetailPage() {
     </>
   );
 }
+
+const useNavigateHandler = () => {
+  const navigate = useNavigate();
+
+  const handleBack = () => {
+    navigate('/');
+  };
+
+  return { handleBack };
+};
 
 const useJobDetailQuery = (id: string) => {
   return useQuery({

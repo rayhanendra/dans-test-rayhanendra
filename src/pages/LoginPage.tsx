@@ -6,25 +6,7 @@ import { Box, Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 function LoginPage() {
-  const navigate = useNavigate();
-
-  const user = useUser();
-  const login = useAuthStore((state) => state.login);
-  const logout = useAuthStore((state) => state.logout);
-
-  const responseMessage = (response: CredentialResponse) => {
-    login(response);
-    navigate('/');
-  };
-
-  const errorMessage = () => {
-    console.log('Login Failed');
-  };
-
-  const handleLogout = () => {
-    logout();
-    googleLogout();
-  };
+  const { user, responseMessage, errorMessage, handleLogout } = useLoginPage();
 
   return (
     <Box
@@ -76,5 +58,34 @@ function LoginPage() {
     </Box>
   );
 }
+
+const useLoginPage = () => {
+  const navigate = useNavigate();
+
+  const user = useUser();
+  const login = useAuthStore((state) => state.login);
+  const logout = useAuthStore((state) => state.logout);
+
+  const responseMessage = (response: CredentialResponse) => {
+    login(response);
+    navigate('/');
+  };
+
+  const errorMessage = () => {
+    console.log('Login Failed');
+  };
+
+  const handleLogout = () => {
+    logout();
+    googleLogout();
+  };
+
+  return {
+    user,
+    responseMessage,
+    errorMessage,
+    handleLogout,
+  };
+};
 
 export default LoginPage;

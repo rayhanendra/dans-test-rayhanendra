@@ -16,8 +16,8 @@ type Props = {
 };
 
 const JobList = ({ filter }: Props) => {
-  const navigate = useNavigate();
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useJobsQuery(filter);
+  const { handleNavigate } = useNavigateHandler();
   const { ref, inView } = useInView();
 
   React.useEffect(() => {
@@ -25,10 +25,6 @@ const JobList = ({ filter }: Props) => {
       fetchNextPage();
     }
   }, [inView]);
-
-  const handleNavigate = (id: string) => {
-    navigate(`/detail/${id}`);
-  };
 
   if (status === 'loading') return <BaseLoader />;
 
@@ -111,6 +107,16 @@ const JobList = ({ filter }: Props) => {
       </Button>
     </>
   );
+};
+
+const useNavigateHandler = () => {
+  const navigate = useNavigate();
+
+  const handleNavigate = (id: string) => {
+    navigate(`/detail/${id}`);
+  };
+
+  return { handleNavigate };
 };
 
 const useJobsQuery = (filter: { job: string; location: string; full_time: boolean }) =>
