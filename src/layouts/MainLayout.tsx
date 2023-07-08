@@ -7,7 +7,7 @@ const MainLayout = () => {
   return (
     <>
       <TheAppbar />
-      <Container maxWidth="md" sx={{ mt: 4 }}>
+      <Container maxWidth="lg" sx={{ mt: 4 }}>
         <Outlet />
       </Container>
     </>
