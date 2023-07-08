@@ -1,11 +1,11 @@
 import { AppBar, Avatar, Box, Button, Container, Menu, MenuItem, Toolbar, Typography } from '@mui/material';
 import React, { useEffect } from 'react';
-import { useAuthActions, useUser } from '../../store/authStore';
+import { useAuthStore, useUser } from '../../store/authStore';
 import jwtDecode from 'jwt-decode';
 
 const TheAppbar = () => {
   const user = useUser();
-  const { logout } = useAuthActions();
+  const logout = useAuthStore((state) => state.logout);
 
   const [profile, setProfile] = React.useState({
     picture: '',

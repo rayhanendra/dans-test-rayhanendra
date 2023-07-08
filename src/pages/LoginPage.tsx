@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoogleLogin, googleLogout } from '@react-oauth/google';
 import type { CredentialResponse } from '@react-oauth/google';
-import { useAuthActions, useUser } from '../store/authStore';
+import { useAuthStore, useUser } from '../store/authStore';
 import { Box, Button, Container, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,7 +9,8 @@ function LoginPage() {
   const navigate = useNavigate();
 
   const user = useUser();
-  const { login, logout } = useAuthActions();
+  const login = useAuthStore((state) => state.login);
+  const logout = useAuthStore((state) => state.logout);
 
   const responseMessage = (response: CredentialResponse) => {
     login(response);

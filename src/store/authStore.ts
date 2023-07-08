@@ -1,33 +1,28 @@
 import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { createJSONStorage, persist } from 'zustand/middleware';
 
-type AuthState = {
+type State = {
   user: any;
 };
 
-type AuthActions = {
-  actions: {
-    login: (user: any) => void;
-    logout: () => void;
-  };
+type Action = {
+  login: (user: any) => void;
+  logout: () => void;
 };
 
-export const useAuthStore = create<AuthState & AuthActions>()(
+export const useAuthStore = create<State & Action>()(
   persist(
     (set) => ({
       user: null,
 
-      actions: {
-        login: (user) => set({ user }),
-        logout: () => set({ user: null }),
-      },
+      login: (user: any) => set({ user }),
+      logout: () => set({ user: null }),
     }),
     {
-      name: 'authStore',
+      name: 'auth-store',
+      storage: createJSONStorage(() => localStorage),
     },
   ),
 );
 
 export const useUser = () => useAuthStore((state) => state.user);
-
-export const useAuthActions = () => useAuthStore((state) => state.actions);
