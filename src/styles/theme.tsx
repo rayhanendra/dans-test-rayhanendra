@@ -37,7 +37,23 @@ let theme = createTheme({
             textTransform: 'none',
           },
         },
+        {
+          props: { variant: 'contained', color: 'secondary' },
+          style: {
+            color: '#fff',
+            background: 'linear-gradient(to bottom, #C4D0D9 0%, #A9B7C2 30%, #89A2AF 100%)',
+            textTransform: 'none',
+          },
+        },
       ],
+    },
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: {
+          borderRadius: '0px',
+          border: '3px solid #E0E0E0',
+        },
+      },
     },
   },
 });
